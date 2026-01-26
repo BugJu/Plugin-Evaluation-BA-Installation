@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<label>NO_LABEL</label>
+		<cctimestamp>NO_TIMESTAMP</cctimestamp>
+		<scm.revision>NO_SCM_REVISION</scm.revision>
+
+		<version.proguard>7.8.1</version.proguard>
+		<version.proguard-core>9.2.0</version.proguard-core>
+	</properties>
+
+
+	<groupId>com.github.wvengen</groupId>
+	<artifactId>proguard-maven-plugin</artifactId>
+	<name>ProGuard Maven Plugin</name>
+	<version>2.7.1-SNAPSHOT</version>
+	<packaging>maven-plugin</packaging>
+
+	<description>Maven 3 Plugin for ProGuard</description>
+	<url>https://github.com/wvengen/proguard-maven-plugin</url>
+
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License (LGPL)</name>
+			<url>https://www.gnu.org/licenses/lgpl.html</url>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/wvengen/proguard-maven-plugin</url>
+		<connection>scm:git:git://github.com/wvengen/proguard-maven-plugin.git</connection>
+	</scm>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/wvengen/proguard-maven-plugin/issues</url>
+	</issueManagement>
+
+	<developers>
+		<developer>
+			<id>wvengen</id>
+			<name>wvengen</name>
+			<email>dev-java@willem.engen.nl</email>
+		</developer>
+		<developer>
+			<id>cmorty</id>
+			<name>cmorty</name>
+			<email>morty@gmx.net</email>
+		</developer>
+		<developer>
+			<id>lasselindqvist</id>
+			<name>Lasse Lindqvist</name>
+			<email>lasse.k.lindqvist@gmail.com</email>
+		</developer>
+	</developers>
+
+	<contributors>
+		<contributor>
+			<name>Chuckame</name>
+			<email>chuckame@gmail.com</email>
+		</contributor>
+	</contributors>
+
+	<dependencies>
+
+		<!-- From version 7 on we need to add two dependencies -->
+		<dependency>
+			<groupId>com.guardsquare</groupId>
+			<artifactId>proguard-base</artifactId>
+			<version>${version.proguard}</version>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.guardsquare</groupId>
+			<artifactId>proguard-core</artifactId>
+			<version>${version.proguard-core}</version>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.10.15</version>
+		</dependency>
+
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-artifact</artifactId>
+            <version>3.9.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <version>3.9.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-archiver</artifactId>
+			<version>2.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.21.0</version>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>3.9.11</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+            <plugin>
+                <groupId>uni.dj</groupId>
+                <artifactId>maven-dep-resolver</artifactId>
+                <version>1.0</version>
+                <executions>
+                    <execution>
+                        <id>analyze-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>analyze-dependencies</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.14.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<compilerArgs>
+						<arg>-Xlint</arg>
+					</compilerArgs>
+				</configuration>
+
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<version>3.15.2</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.4.2</version>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Version>${label}</Version>
+							<Build-Time>${cctimestamp}</Build-Time>
+							<Implementation-Version>${project.version}</Implementation-Version>
+							<SVN-Revision>${scm.revision}</SVN-Revision>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.21.0</version>
+				<configuration>
+					<outputEncoding>UTF-8</outputEncoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.3.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+	</build>
+
+	<reporting>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-plugin-report-plugin</artifactId>
+				<version>3.15.2</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>3.9.0</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>dependencies</report>
+							<report>dependency-convergence</report>
+							<report>plugin-management</report>
+							<report>licenses</report>
+							<report>scm</report>
+							<report>summary</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
+		</plugins>
+	</reporting>
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>3.2.8</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.sonatype.plugins</groupId>
+						<artifactId>nexus-staging-maven-plugin</artifactId>
+						<version>1.7.0</version>
+						<extensions>true</extensions>
+						<configuration>
+							<serverId>ossrh</serverId>
+							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+							<autoReleaseAfterClose>true</autoReleaseAfterClose>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>integration-test</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-invoker-plugin</artifactId>
+						<version>3.9.1</version>
+						<executions>
+							<execution>
+								<id>run-invoker</id>
+								<phase>verify</phase>
+								<goals>
+									<!-- install ourselves to the fake repo -->
+									<goal>install</goal>
+									<!-- then run the subordinate Maven -->
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<projectsDirectory>${project.basedir}/src/it</projectsDirectory>
+							<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+							<localRepositoryPath>${projects.build.directory}/local-repo</localRepositoryPath>
+							<!-- the .groovy extension (or .bsh, if you're using BeanShell) is implied -->
+							<postBuildHookScript>verify</postBuildHookScript>
+							<goals>
+								<goal>install</goal>
+							</goals>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>
