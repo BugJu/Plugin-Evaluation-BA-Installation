@@ -14,7 +14,7 @@ Maven wird zur Verwaltung der Projektabhängigkeiten und zum Bauen des Projekts 
 
 
 ### 3. IntelliJ IDEA
-- Da das Plugin für IntelliJ entwickelt wurde, muss es in IntelliJ genutzt werden, für das graphische Interface.
+- Da das Interface als Plugin für IntelliJ entwickelt wurde, muss IntelliJ IDEA installiert sein.
 
 ### 4. Graphviz (dot)
 Das Tool `dot` ist Teil von Graphviz und wird zur Visualisierung von Abhängigkeitsgraphen benötigt.
