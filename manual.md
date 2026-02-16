@@ -7,7 +7,7 @@
         - "depedency-tree.json"
         - "dependency-tree.dot"
         - "dependencies.png"
-        - "change-log.txt" (only if a change via details view was already made)
+        - "change-log.json" (only if a change via details view was already made)
 - in the Overview tab you can find a "load dependencies" Button, which loads the dependencies from the target directory
   into the plugin
 
@@ -23,8 +23,10 @@
 - tree view of the dependencies
 - search bar to search directly for specific dependencies
 - filter dropdown to filter the dependencies for:
+    - "None" no filter
     - "omitted" depencies (dependency version being cutoff by the maven version mediation
     - "unused" dependencies (dependency not used in the project) **NOT REALLY RELIABLE!!**
+    - "used" dependencies (dependency used in the project) **NOT REALLY RELIABLE!!**
 - **double click on a dependency** to open the dependency detail view
 
 ### 3.1 Dependency detail view
@@ -49,3 +51,9 @@
 ## 4. Dependency Graph
 - shows the dependency tree of the project
 - "zoom in/out" button and "fit" button to zoom in/out on the graph
+
+## 5. Tips
+- If you want to reload Poject dependencies with new changes, you can execute "mvn package"
+- If you want to undo all changes made to the dependencies, you can execute "mvn clean"
+- All changes are logged in "/target/change-log.json" file
+- unused dependency parsing is not reliable, so it might be wrong sometimes mostly false positives no false negatives
