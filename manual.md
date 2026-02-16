@@ -1,7 +1,7 @@
 # User manual with guides
 
 ## 1. How to load dependencies
-
+- **Open the project you want to analyze in IntelliJ, with the project being the root Node otherwise there will be errors occuring**
 - to load the dependencies execute "mvn package"
     - in the "/target" directory there should now be the following files:
         - "depedency-tree.json"
